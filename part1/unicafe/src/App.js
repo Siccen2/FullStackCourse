@@ -6,6 +6,9 @@ const App = () => {
   const [neutral, setNeutral] = useState({ neutralNumber: 0 })
   const [bad, setBad] = useState({ badNumber: 0 })
   
+  let all = good.goodNumber + neutral.neutralNumber + bad.badNumber
+
+  let average = (good.goodNumber * 1 + neutral.neutralNumber * 0 + bad.badNumber * -1) / all 
 
   const goodClick = () => {
     const newClick = {
@@ -54,9 +57,10 @@ const App = () => {
       <p>good {good.goodNumber}</p>
       <p>neutral {neutral.neutralNumber}</p>
       <p>bad {bad.badNumber} </p>
-      <p>all {good.goodNumber + neutral.neutralNumber + bad.badNumber} </p>
-      <p>average {(good.goodNumber * 1 + neutral.neutralNumber * 0 + bad.badNumber * -1) / (good.goodNumber + neutral.neutralNumber + bad.badNumber)} </p>
-      <p>positive {good.goodNumber / (good.goodNumber + neutral.neutralNumber + bad.badNumber)} %</p>
+      <p>all {all} </p>
+      <p>average {average} </p>
+      <p>positive {good.goodNumber / all} %</p>
+      
 
     </div>
 
