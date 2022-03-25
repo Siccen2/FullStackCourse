@@ -32,8 +32,8 @@ const App = () => {
       <Button handleClick = {vote} text="Vote" />
       <Button handleClick={() => setSelected(Math.floor(Math.random() * anecdotes.length))} text="Generator" />
       <h1>Anecdotes with most votes</h1>
-      <p>{anecdotes[points(Math.max(points))]}</p>
-      <p>are </p>
+      <p>{anecdotes[points.indexOf(Math.max(...points))]}</p>
+      <p>Has {Math.max(...points)} votes </p>
     </div>
   )
 }
