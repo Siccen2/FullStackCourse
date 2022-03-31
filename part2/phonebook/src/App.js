@@ -10,11 +10,18 @@ const App = () => {
   const addName = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
-    const nameObject = {
-      name: newName
+
+    let sameName = persons.find(person => person.name === newName)
+    if (typeof sameName === 'undefined') {
+      const nameObject = {
+        name: newName
+      }
+      setPersons(persons.concat(nameObject))
+      setNewName('')
     }
-    setPersons(persons.concat(nameObject))
-    setNewName('')
+    else {
+      window.alert(window.alert(newName + 'is already added to the phonebook'))
+    }
   }
 
   const handleNoteChange = (event) => {
@@ -22,22 +29,21 @@ const App = () => {
     setNewName(event.target.value)
   }
 
-  
+
 
   return (
     <div>
       <h2>Phonebook</h2>
       <form onSubmit={addName}>
         <div>
-          name: <input value={newName}
-            onChange={handleNoteChange} />
+          name: <input value={newName} onChange={handleNoteChange} />
         </div>
         <div>
           <button type="submit">add</button>
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map((person,id) => <div key={id}>{person.name}</div>)}
+      {persons.map((person, id) => <div key={id}> {person.name}</div>)}
     </div>
   )
 }
