@@ -1,12 +1,19 @@
 import { useState } from 'react'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
 
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-1234567' }
+    { name: 'Arto Hellas', number: '040-123456', id: 1 },
+    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
+    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
+    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, SetNewNumber] = useState('')
+  const [search, SetSearch] = useState('')
 
   const addName = (event) => {
     event.preventDefault()
@@ -26,8 +33,6 @@ const App = () => {
     }
   }
 
-
-
   const handleNoteChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -36,25 +41,25 @@ const App = () => {
     console.log(event.target.value)
     SetNewNumber(event.target.value)
   }
+  const handleSearchChange = (event) => {
+    console.log(event.target.value)
+    SetSearch(event.target.value)
+  }
 
+  const searchName = persons.filter(person => person.name.includes(search))
 
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addName}>
-        <div>
-          name: <input value={newName} onChange={handleNoteChange} />
-        </div>
-        <div>
-          number: <input value={newNumber} onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <Filter header= 'filter shown with'
+      name={search} handleFunction={handleSearchChange} />
+      <h2>Add a New</h2>
+      <PersonForm addName={addName} newName={newName}
+      handleNoteChange={handleNoteChange} newNumber={newNumber}
+      handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      {persons.map((person, id,) => <div key={id}> {person.name} {person.number}</div>)}
+      <Persons searchName={searchName} />
     </div>
   )
 }
