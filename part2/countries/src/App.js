@@ -7,13 +7,13 @@ const NationFinder = ({ searchWord, nationstoshow }) => {
       <div>
         <h1>{nationstoshow[0].name.common}</h1>
         <div>
-          capital {nationstoshow[0].capital.toString()}
+          Capital {nationstoshow[0].capital.toString()}
         </div>
         <div>
-          population {nationstoshow[0].population.toString()}
+          Area {nationstoshow[0].area.toString()}
         </div>
         <div>
-          <h3>languages</h3>
+          <h3>Languages</h3>
           <ul>
             {Object.values(nationstoshow[0].languages).map(language => <li key={language}>{language}</li>)}
           </ul>
@@ -24,7 +24,13 @@ const NationFinder = ({ searchWord, nationstoshow }) => {
       </div>
     )
   }
-  
+  else if (nationstoshow.length <= 10){
+   return(
+   <div>
+      {nationstoshow.map((nation) => <div key={nation.name.common}>{nation.name.common} </div>)}
+    </div>
+   )
+  }
   else {
     return (
       <div>
@@ -43,7 +49,7 @@ const App = () => {
     axios
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        console.log('help', response.data)
+        
         setCountries(response.data)
       })
   }
