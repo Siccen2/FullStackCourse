@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 
-const NationFinder = ({ searchWord, nationstoshow }) => {
+
+const NationFinder = ({ nationstoshow, setSearchWord }) => {
   if (nationstoshow.length === 1) {
     return (
       <div>
@@ -24,12 +25,13 @@ const NationFinder = ({ searchWord, nationstoshow }) => {
       </div>
     )
   }
-  else if (nationstoshow.length <= 10){
-   return(
-   <div>
-      {nationstoshow.map((nation) => <div key={nation.name.common}>{nation.name.common} </div>)}
-    </div>
-   )
+  else if (nationstoshow.length <= 10) {
+    return (
+      <div>
+        {nationstoshow.map((nation) => <div key={nation.name.common}>{nation.name.common}
+          <button type="button" onClick={() => setSearchWord(nation.name.common)}>show</button></div>)}
+      </div>
+    )
   }
   else {
     return (
@@ -41,6 +43,7 @@ const NationFinder = ({ searchWord, nationstoshow }) => {
 
 }
 
+
 const App = () => {
   const [countries, setCountries] = useState([])
   const [searchWord, setSearchWord] = useState('')
@@ -49,7 +52,7 @@ const App = () => {
     axios
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        
+
         setCountries(response.data)
       })
   }
@@ -62,12 +65,14 @@ const App = () => {
   const handleSearchChange = (event) => {
     setSearchWord(event.target.value)
   }
+
   return (
     <div>
       find countries <input value={searchWord} onChange={handleSearchChange} />
       <div>
       </div>
-      <NationFinder searchWord={searchWord} nationstoshow={nationstoshow} />
+      <NationFinder nationstoshow={nationstoshow} setSearchWord={setSearchWord} />
+
     </div >
 
 
