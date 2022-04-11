@@ -21,6 +21,8 @@ const NationFinder = ({ nationstoshow, setSearchWord }) => {
           <div>
             <img src={nationstoshow[0].flags.png} alt={nationstoshow[0].name.common} height="100" width="100" />
           </div>
+          <h3>Weather in {nationstoshow[0].capital.toString()}</h3>
+          <Weather city={nationstoshow[0].capital.toString()} />
         </div>
       </div>
     )
@@ -42,6 +44,27 @@ const NationFinder = ({ nationstoshow, setSearchWord }) => {
   }
 
 }
+
+const Weather = ({ city }) => {
+  
+  const [weatherforecast, setweatherforecast] = useState([])
+
+  const hook2 = () => {
+    axios.get('https://api.weather.gov')
+      .then(response => {
+        setweatherforecast(response.data)
+      })
+  }
+  useEffect(hook2, [])
+  console.log('hook2',weatherforecast)
+  return (
+    <div>
+     
+    </div>
+  )
+}
+
+
 
 
 const App = () => {

@@ -2,28 +2,25 @@ import { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
-import axios from 'axios'
+import PersonsService from './services/Persons'
 
 
 const App = () => {
-  const [persons,setPersons] = useState([])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, SetNewNumber] = useState('')
   const [search, SetSearch] = useState('')
 
-  const hook = () => {
-    console.log('effect')
-    axios
-    .get('http://localhost:3001/persons')
-    .then(response => {
-      setPersons(response.data)
-    })
+  useEffect(() => {
+    PersonsService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
+      })
     console.log('promise fulfilled')
-  }
+  }, [])
 
-  useEffect(hook,[])
-
-  console.log('render',persons.length,'persons')
+  console.log('render', persons.length, 'persons')
 
 
   const addName = (event) => {
@@ -35,7 +32,12 @@ const App = () => {
       const nameObject = {
         name: newName, number: newNumber
       }
-      setPersons(persons.concat(nameObject))
+      PersonsService
+      .create(nameObject)
+      .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+      })
+     
       setNewName('')
       SetNewNumber('')
     }
@@ -63,12 +65,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <Filter header= 'filter shown with'
-      name={search} handleFunction={handleSearchChange} />
+      <Filter header='filter shown with'
+        name={search} handleFunction={handleSearchChange} />
       <h2>Add a New</h2>
       <PersonForm addName={addName} newName={newName}
-      handleNoteChange={handleNoteChange} newNumber={newNumber}
-      handleNumberChange={handleNumberChange} />
+        handleNoteChange={handleNoteChange} newNumber={newNumber}
+        handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
       <Persons searchName={searchName} />
     </div>
