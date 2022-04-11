@@ -15,5 +15,15 @@ const create = newObject => {
         return response.data
     })
 }
+const remove = (objectid) => {
+  const request = axios.delete(link+`/`+objectid.toString())
+  return request.then(response => response)
+}
 
-export default { getAll, create } 
+const functions = {
+  getAll, create, remove
+
+};
+
+
+export default functions

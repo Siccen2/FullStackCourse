@@ -22,7 +22,20 @@ const App = () => {
 
   console.log('render', persons.length, 'persons')
 
+  const deleteAccount = (event) => {
+    event.preventDefault()
+    const id = parseInt(event.target.value)
+    const personname = persons.find(person => person.id === id)
+    if(window.confirm(`Delete ${personname.name}?`)){
+      PersonsService
+      .remove(id)
+      .then(response => {
+          setPersons(persons.filter(person => person.id !== id))
+      })
+    }
+  }
 
+  
   const addName = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
@@ -72,7 +85,7 @@ const App = () => {
         handleNoteChange={handleNoteChange} newNumber={newNumber}
         handleNumberChange={handleNumberChange} />
       <h2>Numbers</h2>
-      <Persons searchName={searchName} />
+      <Persons searchName={searchName} deleteAccount={deleteAccount} />
     </div>
   )
 }
