@@ -55,7 +55,14 @@ const App = () => {
       SetNewNumber('')
     }
     else {
-      window.alert(window.alert(newName + 'is already added to the phonebook'))
+      if(window.confirm(`${newName} is already added to the phonebook,replace the old number with the new one ?`))
+      {
+        const changedNumber = {...sameName,number:newNumber}
+        PersonsService.replace(changedNumber)
+        .then(responsedata => {
+          setPersons(persons.map(person => person.id===responsedata.id?responsedata:person))
+        })
+      }
     }
   }
 

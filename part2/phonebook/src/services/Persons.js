@@ -20,8 +20,13 @@ const remove = (objectid) => {
   return request.then(response => response)
 }
 
+const replace = (newobject) => {
+  const request = axios.put(link+`/`+newobject.id,newobject)
+  return request.then(response => response.data)
+}
+
 const functions = {
-  getAll, create, remove
+  getAll, create, remove, replace
 
 };
 
