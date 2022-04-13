@@ -46,20 +46,29 @@ const NationFinder = ({ nationstoshow, setSearchWord }) => {
 }
 
 const Weather = ({ city }) => {
-  
-  const [weatherforecast, setweatherforecast] = useState([])
+
+  const [weatherforecast, setweatherforecast] = useState(null)
+
+
+  const apiKey = "779c792b6da4af669ea061f875514ce5"
 
   const hook2 = () => {
-    axios.get('https://api.weather.gov')
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
       .then(response => {
         setweatherforecast(response.data)
       })
   }
+  
   useEffect(hook2, [])
-  console.log('hook2',weatherforecast)
+  if(weatherforecast === null) return null
+  console.log('hook2', weatherforecast)
+  console.log('weather', weatherforecast.weather[0].icon)
+  
   return (
     <div>
-     
+      <div><b>temperature is:</b> {weatherforecast.main.temp} Celsius</div>
+      <img alt="titel" src={`http://openweathermap.org/img/wn/${weatherforecast.weather[0].icon}@2x.png`}  height="100" width="100" />
+      <div><b>wind:</b> {weatherforecast.wind.speed} m/s</div>
     </div>
   )
 }
