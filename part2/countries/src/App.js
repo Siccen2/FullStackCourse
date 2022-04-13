@@ -48,9 +48,8 @@ const NationFinder = ({ nationstoshow, setSearchWord }) => {
 const Weather = ({ city }) => {
 
   const [weatherforecast, setweatherforecast] = useState(null)
-
-
-  const apiKey = "779c792b6da4af669ea061f875514ce5"
+ 
+  const apiKey = process.env.REACT_APP_API_KEY
 
   const hook2 = () => {
     axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`)
