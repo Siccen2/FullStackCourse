@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Ada Lovelace",
-      "number": "123",
-      "id": 2
-    },
-    {
       "name": "Dan Abramov",
       "number": "156656",
       "id": 3
@@ -24,21 +19,6 @@
       "name": "asda",
       "number": "21312",
       "id": 6
-    },
-    {
-      "name": "msmdd",
-      "number": "123122",
-      "id": 7
-    },
-    {
-      "name": "21pojg",
-      "number": "231312",
-      "id": 8
-    },
-    {
-      "name": "Martin",
-      "number": "212",
-      "id": 9
     }
   ]
 }

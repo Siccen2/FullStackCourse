@@ -67,13 +67,25 @@ const App = () => {
         PersonsService.replace(changedNumber)
           .then(responsedata => {
             setPersons(persons.map(person => person.id === responsedata.id ? responsedata : person))
-          })
-
+          
         setConfirm(`New number ${newNumber}.`)
         setTimeout(() => {
           setConfirm(null)
         }, 2000)
+      })
+        .catch(error => {
+          console.log(newName)
+          setPersons(persons.filter(person => person.name !== newName))
+          setConfirm(`Information of ${newName} was already deleted from the server`)
+          setTimeout(() => {
+            setConfirm(null)
+          },5000)
+
+        })
+
       }
+
+
     }
   }
 
