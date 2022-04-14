@@ -3,6 +3,7 @@ import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 import PersonsService from './services/Persons'
+import Notification from './components/Notification'
 
 
 const App = () => {
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, SetNewNumber] = useState('')
   const [search, SetSearch] = useState('')
+  const [confirm, setConfirm] = useState(null)
 
   useEffect(() => {
     PersonsService
@@ -26,16 +28,16 @@ const App = () => {
     event.preventDefault()
     const id = parseInt(event.target.value)
     const personname = persons.find(person => person.id === id)
-    if(window.confirm(`Delete ${personname.name}?`)){
+    if (window.confirm(`Delete ${personname.name}?`)) {
       PersonsService
-      .remove(id)
-      .then(response => {
+        .remove(id)
+        .then(response => {
           setPersons(persons.filter(person => person.id !== id))
-      })
+        })
     }
   }
 
-  
+
   const addName = (event) => {
     event.preventDefault()
     console.log('button clicked', event.target)
@@ -46,22 +48,31 @@ const App = () => {
         name: newName, number: newNumber
       }
       PersonsService
-      .create(nameObject)
-      .then(returnedPerson => {
+        .create(nameObject)
+        .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
-      })
-     
+        })
+
+      setConfirm(`Added ${newName}.`)
+      setTimeout(() => {
+        setConfirm(null)
+      }, 2000)
+
       setNewName('')
       SetNewNumber('')
     }
     else {
-      if(window.confirm(`${newName} is already added to the phonebook,replace the old number with the new one ?`))
-      {
-        const changedNumber = {...sameName,number:newNumber}
+      if (window.confirm(`${newName} is already added to the phonebook,replace the old number with the new one ?`)) {
+        const changedNumber = { ...sameName, number: newNumber }
         PersonsService.replace(changedNumber)
-        .then(responsedata => {
-          setPersons(persons.map(person => person.id===responsedata.id?responsedata:person))
-        })
+          .then(responsedata => {
+            setPersons(persons.map(person => person.id === responsedata.id ? responsedata : person))
+          })
+
+        setConfirm(`New number ${newNumber}.`)
+        setTimeout(() => {
+          setConfirm(null)
+        }, 2000)
       }
     }
   }
@@ -85,6 +96,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={confirm} />
       <Filter header='filter shown with'
         name={search} handleFunction={handleSearchChange} />
       <h2>Add a New</h2>
