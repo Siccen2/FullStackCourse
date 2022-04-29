@@ -9,11 +9,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
+    "jest": "^28.0.2",
     "nodemon": "^2.0.15"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "jest --verbose"
   },
   "author": "Martin",
   "license": "ISC",
@@ -25,5 +26,8 @@
     "url": "https://github.com/Siccen2/FullStackCourse/issues"
   },
   "homepage": "https://github.com/Siccen2/FullStackCourse#readme",
-  "description": ""
+  "description": "",
+  "jest": {
+    "testEnvironment": "node"
+  }
 }
