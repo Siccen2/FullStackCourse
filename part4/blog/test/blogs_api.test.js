@@ -65,6 +65,29 @@ test('a valid blog can be added ', async () => {
   )
 })
 
+test('zero likes ', async () => {
+  const newBlog = {
+    title: 'sometherdfing',
+    author: 'Marfdsfsertin',
+    url: 'www.gfafdsss.fi',
+    
+  }
+
+  await api
+    .post('/api/blogs')
+    .send(newBlog)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+
+  const blogsAtEnd = await helper.blogsInDb()
+  expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length + 1)
+
+  const likes = blogsAtEnd.map(n => n.likes)
+  expect(likes).toContain(
+    0
+  )
+})
+
 
 /*test('the first note is about HTTP methods', async () => {
   const response = await api.get('/api/blogs')
