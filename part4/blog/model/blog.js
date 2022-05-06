@@ -1,7 +1,8 @@
 require('dotenv').config()
+const config = require('../utils/config')
 const mongoose = require('mongoose')
 
-const mongoUrl = process.env.MONGO_DB_BLOGS
+const mongoUrl = config.MONGODB_URI
 mongoose.connect(mongoUrl)
 
 const blogSchema = new mongoose.Schema({
