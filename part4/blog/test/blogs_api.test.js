@@ -121,11 +121,23 @@ describe('deletion of a blog', () => {
   })
 })
 
-/*test('the first note is about HTTP methods', async () => {
-  const response = await api.get('/api/blogs')
+describe('Testing PUT request(s):', () => {
+  test('Updating likes in post', async () => {
+    const currentBlogsInDb = await helper.blogsInDb()
+    const blogToUpdate = currentBlogsInDb[0]
+    blogToUpdate.likes = 666
 
-  expect(response.body[1].title).toBe('Maryee3')
-})*/
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blogToUpdate)
+      .expect(200)
+
+    const blogsAfterUpdate = await helper.blogsInDb()
+    const contents = blogsAfterUpdate.map(r => r.likes)
+
+    expect(contents).toContain(666)
+  }, 100000)
+})
 
 afterAll(() => {
   mongoose.connection.close()
