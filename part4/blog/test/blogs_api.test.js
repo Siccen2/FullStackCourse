@@ -1,5 +1,6 @@
-const mongoose = require('mongoose')
+
 const supertest = require('supertest')
+const mongoose = require('mongoose')
 const app = require('../app')
 const helper = require('../test/test_helper')
 const Blog = require('../model/blog')
@@ -99,6 +100,26 @@ test('title or url is missing', async () => {
           .expect('Bad Request')
 })
 
+describe('deletion of a blog', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogsToDelete = blogsAtStart[0]
+
+    await api
+      .delete(`/api/blogs/${blogsToDelete.id}`)
+      .expect(204)
+
+    const blogssAtEnd = await helper.blogsInDb()
+
+    expect(blogssAtEnd).toHaveLength(
+      helper.initialBlogs.length - 1
+    )
+
+    const contents = blogssAtEnd.map(r => r.title)
+
+    expect(contents).not.toContain(blogsToDelete.title)
+  })
+})
 
 /*test('the first note is about HTTP methods', async () => {
   const response = await api.get('/api/blogs')
