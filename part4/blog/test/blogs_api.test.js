@@ -88,6 +88,17 @@ test('zero likes ', async () => {
   )
 })
 
+test('title or url is missing', async () => {
+  const newBlog3 = {
+      author: "Sample author2",
+      likes: 20,
+  }
+  await api.post('/api/blogs')
+          .send(newBlog3)
+          .expect(400)
+          .expect('Bad Request')
+})
+
 
 /*test('the first note is about HTTP methods', async () => {
   const response = await api.get('/api/blogs')
